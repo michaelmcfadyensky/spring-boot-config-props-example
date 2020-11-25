@@ -1,0 +1,8 @@
+test:
+  section:
+    key1:
+      propA: a
+      propB: b
+    key2:
+      propA: c
+      propB: d
