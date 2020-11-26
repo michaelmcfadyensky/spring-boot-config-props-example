@@ -54,8 +54,10 @@ class ConfigTest {
         ConfigurableEnvironment environment = new StandardEnvironment();
         MutablePropertySources propertySources = environment.getPropertySources();
         Map<String, Object> source = new HashMap<>();
-        source.put("test.section.key2.propB", "jusssz");
-        source.put("test.section[key1].propA", "tomasz");
+        source.put("test.section.key-two.propB", "jusssz");
+        source.put("test.section[key-one].propA", "tomasz");
+        source.put("test.section2.1.propB", "jusssz");
+        source.put("test.section2[0].propA", "tomasz");
 //        source.put("test.testing[0].a", "tj");
         propertySources.addFirst(new MapPropertySource("properties", source));
         Assertions.assertThatCode(() -> {
@@ -66,10 +68,15 @@ class ConfigTest {
                     .run();
             SectionConfigurationProperties bean = ctx.getBean(SectionConfigurationProperties.class);
             Assertions.assertThat(bean).isNotNull();
-            Assertions.assertThat(bean.getSection().get("key1").getPropA()).isEqualTo("tomasz");
-            Assertions.assertThat(bean.getSection().get("key1").getPropB()).isEqualTo("local-p");
-            Assertions.assertThat(bean.getSection().get("key2").getPropA()).isEqualTo("local-yml");
-            Assertions.assertThat(bean.getSection().get("key2").getPropB()).isEqualTo("jusssz");
+            Assertions.assertThat(bean.getSection().get("key-two").getPropA()).isEqualTo("local-yml");
+            Assertions.assertThat(bean.getSection().get("key-two").getPropB()).isEqualTo("jusssz");
+            Assertions.assertThat(bean.getSection().get("key-one").getPropA()).isEqualTo("tomasz");
+            Assertions.assertThat(bean.getSection().get("key-one").getPropB()).isEqualTo("local-p");
+
+            Assertions.assertThat(bean.getSection2().get(0).getPropA()).isEqualTo("tomasz");
+            Assertions.assertThat(bean.getSection2().get(0).getPropB()).isEqualTo("b");
+            Assertions.assertThat(bean.getSection2().get(1).getPropA()).isEqualTo("c");
+            Assertions.assertThat(bean.getSection2().get(1).getPropB()).isEqualTo("jusssz");
 
         }).doesNotThrowAnyException();
     }

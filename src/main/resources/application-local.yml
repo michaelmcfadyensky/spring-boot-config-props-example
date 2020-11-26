@@ -1,4 +1,4 @@
 test:
   section:
-    key2:
+    key-two:
       propA: local-yml

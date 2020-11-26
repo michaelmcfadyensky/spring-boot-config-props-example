@@ -1,8 +1,14 @@
 test:
   section:
-    key1:
+    key-one:
       propA: a
       propB: b
-    key2:
+    key-two:
       propA: c
+      propB: d
+
+  section2:
+    - prop-a: a
+      propB: b
+    - prop-a: c
       propB: d
